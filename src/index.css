@@ -1,0 +1,269 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+.hidden {
+  /* display: none; */
+}
+
+.page-todo {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #153677, #4e085f);
+  padding: 10px;
+}
+.todo-app {
+  width: 100%;
+  max-width: 540px;
+  background: #fff;
+  margin: 100px auto 20px;
+  padding: 40px 30px 70px;
+  border-radius: 10px;
+}
+.todo-app h2 {
+  color: #002765;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.todo-app h2 img {
+  width: 30px;
+  margin-left: 10px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #edeef0;
+  border-radius: 40px;
+  padding-left: 20px;
+  margin-bottom: 30px;
+}
+input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 10px;
+  font-size: 14px;
+}
+#add-task-btn {
+  border: none;
+  outline: none;
+  padding: 16px 50px;
+  background: #ff5945;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 40px;
+}
+
+ul li {
+  list-style: none;
+  font-size: 17px;
+  padding: 12px 8px 12px 50px;
+  user-select: none;
+  cursor: pointer;
+  position: relative;
+}
+ul li::before {
+  content: '';
+  position: absolute;
+  height: 28px;
+  width: 28px;
+  border-radius: 50px;
+  background-image: url(./images/unchecked.png);
+  background-size: cover;
+  background-position: center;
+  top: 12px;
+  left: 8px;
+}
+ul li.checked {
+  color: #555;
+  text-decoration: line-through;
+}
+ul li.checked::before {
+  background-image: url(./images/checked.png);
+}
+ul li span {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  width: 40px;
+  height: 40px;
+  font-size: 22px;
+  color: #555;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+}
+ul li span:hover {
+  background: #edeef0;
+}
+
+.page-signup {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #153677, #4e085f);
+  background-position: center;
+  background-size: cover;
+}
+
+.form-box-signup {
+  width: 90%;
+  max-width: 450px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 50px 60px 70px;
+  text-align: center;
+  border-radius: 6px;
+}
+.form-box-signup h1 {
+  font-size: 30px;
+  margin-bottom: 60px;
+  color: #002765;
+  position: relative;
+}
+.form-box-signup h1::after {
+  content: '';
+  width: 60px;
+  height: 4px;
+  background: #002765;
+  border-radius: 3px;
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.page-signup .form-box-signup .input-group .input-field {
+  background: #eaeaea;
+  margin: 10px 0;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  /* max-height: 65px;
+  transition: max-height 0.5s;
+  overflow: hidden; */
+}
+.page-signup .form-box-signup .input-group .input-field input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  padding: 14px 12px;
+}
+.input-field i {
+  margin-left: 10px;
+  color: #999;
+  width: 20px;
+}
+form p {
+  text-align: left;
+  font-size: 12px;
+}
+form p a {
+  text-decoration: none;
+  color: #3c00a0;
+}
+.btn-field {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.btn-field button {
+  flex-basis: 48%;
+  background: #3c00a0;
+  color: #fff;
+  height: 40px;
+  border-radius: 20px;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  transition: background 1s;
+}
+.btn-field button.disable {
+  background: #eaeaea;
+  color: #555;
+}
+.input-group {
+  margin-bottom: 30px;
+}
+
+.page-signin {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #153677, #4e085f);
+  background-position: center;
+  background-size: cover;
+}
+
+.form-box-signin {
+  width: 90%;
+  max-width: 450px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 50px 60px 70px;
+  text-align: center;
+  border-radius: 6px;
+}
+.form-box-signin h1 {
+  font-size: 30px;
+  margin-bottom: 60px;
+  color: #002765;
+  position: relative;
+}
+.form-box-signin h1::after {
+  content: '';
+  width: 60px;
+  height: 4px;
+  background: #002765;
+  border-radius: 3px;
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.page-signin .form-box-signin .input-group .input-field {
+  background: #eaeaea;
+  margin: 10px 0;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  /* max-height: 65px;
+  transition: max-height 0.5s;
+  overflow: hidden; */
+}
+.page-signin .form-box-signin .input-group .input-field input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  padding: 14px 12px;
+}
+
+.delete-icon {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

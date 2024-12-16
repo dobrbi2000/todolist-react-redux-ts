@@ -1,50 +1,35 @@
 import React, { useState } from 'react';
 import todoIcon from '../images/icon.png';
-import { useEffect } from 'react';
+import { addTodo, removeTodo, toggleTodoComplete } from '../store/todoSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 function TodoApp() {
-  const [todo, setTodo] = useState(() => {
-    const savedTodos = localStorage.getItem('todos');
-    return savedTodos ? JSON.parse(savedTodos) : [];
-  });
+  const dispatch = useDispatch();
+  const todos = useSelector((state) => state.todos.tasks);
 
   const [inputText, setInputText] = useState('');
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todo));
-  }, [todo]);
-
   const handleAddTask = () => {
     if (inputText.trim() === '') {
       setError('Please enter some text to add a task');
-    } else {
-      const newTask = {
-        id: new Date().toISOString(),
-        text: inputText,
-        completed: false,
-      };
-      setTodo([...todo, newTask]);
-      setInputText('');
-      setError('');
+      return;
     }
+    dispatch(
+      addTodo({
+        text: inputText,
+      })
+    );
+    setInputText('');
+    setError('');
   };
 
   const handleDeleteTask = (id) => {
-    const updatedTodo = todo.filter((task) => task.id !== id);
-    setTodo(updatedTodo);
+    dispatch(removeTodo(id));
   };
 
   const handleToggleTask = (id) => {
-    const toggledTask = todo.map((task) => {
-      if (task.id === id) {
-        console.log('Before toggle:', task);
-        return { ...task, completed: !task.completed };
-      }
-      return task;
-    });
-    console.log('After toggle:', toggledTask);
-    setTodo(toggledTask);
+    dispatch(toggleTodoComplete(id));
   };
 
   return (
@@ -68,7 +53,7 @@ function TodoApp() {
         </div>
         {error && <p className="error">{error}</p>}
         <ul id="list-todo-app-container">
-          {todo.map((task) => (
+          {todos.map((task) => (
             <li key={task.id} className={task.completed ? 'checked' : ''} onClick={() => handleToggleTask(task.id)}>
               {task.text}
               <span
@@ -87,5 +72,4 @@ function TodoApp() {
     </div>
   );
 }
-
 export default TodoApp;

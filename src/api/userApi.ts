@@ -1,7 +1,13 @@
-export async function apiRequest(suffix, method, data) {
+import { FormData } from '../store/apiSlice';
+
+export interface ApiRequestOptions {
+  suffix: string;
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  data?: FormData;
+}
+
+export async function apiRequest({ suffix, method, data }: ApiRequestOptions): Promise<any> {
   const url = `https://ya-praktikum.tech/api/v2/${suffix}`;
-  console.log('Sending request to:', url);
-  console.log('Data:', data);
   try {
     const response = await fetch(url, {
       method: method,
@@ -13,9 +19,8 @@ export async function apiRequest(suffix, method, data) {
     });
     console.log('Response:', response);
 
-    if (!response.ok) {
-      console.error('API request failed with status:', response.status);
-      throw new Error('API request failed');
+    if (response.ok) {
+      return true;
     }
 
     const contentType = response.headers.get('content-type');
@@ -24,6 +29,7 @@ export async function apiRequest(suffix, method, data) {
     }
 
     const text = await response.text();
+    console.log('text answer', text);
     if (text === 'OK') {
       return true;
     }
@@ -35,15 +41,15 @@ export async function apiRequest(suffix, method, data) {
   }
 }
 
-export async function checkAuthStatus() {
+export async function checkAuthStatus(): Promise<boolean> {
   try {
-    const response = await apiRequest('auth/user', 'GET');
+    const response = await apiRequest({ suffix: 'auth/user', method: 'GET' });
     console.log('Response from API:', response);
-    if (response.id !== '') {
+    if (response && response.id !== '') {
       return true;
     }
     return false;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Failed to check auth status:', error);
     return false;
   }

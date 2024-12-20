@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { apiRequest } from '../api/userApi';
+// import { apiRequest } from '../api/userApi';
+import { useSelector } from 'react-redux';
+import { signIn } from '../store/apiSlice';
+import { RootState } from '../store/index';
+import { useAppDispatch } from '../hook';
 
-function SignInPage({ setIsAuthenticated }) {
+function SignInPage() {
+  const dispatch = useAppDispatch();
+  const { isLoading, error } = useSelector((state: RootState) => state.api);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     login: '',
     password: '',
   });
 
-  const handleChange = (event) => {
-    console.log('event.target:', event.target);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -18,25 +23,28 @@ function SignInPage({ setIsAuthenticated }) {
     }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      const response = await apiRequest('auth/signin', 'POST', formData);
-      console.log('auth/signin', response);
-      if (response === true) {
-        setIsAuthenticated(true);
-        navigate('/todo');
-        console.log('Login successful', response);
-      }
-    } catch (error) {
-      console.error('Login failed', error);
-    }
+    dispatch(signIn(formData));
   };
+
+  if (isLoading)
+    return (
+      <div className="loading">
+        <h2>Loading...</h2>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="loading">
+        <h2>{error}</h2>
+      </div>
+    );
 
   return (
     <div className="page-signin">
       <div className="form-box-signin">
-        <h1 name="title">Sign In</h1>
+        <h1 className="title">Sign In</h1>
         <form onSubmit={handleSubmit} id="loginForm">
           <div className="input-group">
             <div className="input-field">

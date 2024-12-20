@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
-import { apiRequest } from '../api/userApi';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+// import { apiRequest } from '../api/userApi';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { signUp } from '../store/apiSlice';
+import { RootState } from '../store/index';
+import { FormData } from '../store/apiSlice';
+import { useAppDispatch } from '../hook';
 
 function SignUpPage() {
+  const dispatch = useAppDispatch();
+  const { isLoading, error } = useSelector((state: RootState) => state.api);
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     first_name: '',
     second_name: '',
     login: '',
@@ -13,7 +20,7 @@ function SignUpPage() {
     phone: '',
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -21,21 +28,29 @@ function SignUpPage() {
     }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      const data = await apiRequest('auth/signup', 'POST', formData);
-      console.log('Registration successful', data);
-    } catch (error) {
-      console.error('Registration failed', error);
-    }
+    dispatch(signUp(formData));
   };
+
+  if (isLoading)
+    return (
+      <div className="loading">
+        <h2>Loading...</h2>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="loading">
+        <h2>{error}</h2>
+      </div>
+    );
 
   return (
     <div>
       <div className="page-signup">
         <div className="form-box-signup">
-          <h1 name="title">Sign Up</h1>
+          <h1 className="title">Sign Up</h1>
           <form onSubmit={handleSubmit} id="logonForm">
             <div className="input-group">
               <div className="input-field">

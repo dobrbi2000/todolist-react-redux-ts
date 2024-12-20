@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import todoIcon from '../images/icon.png';
 import { addTodo, removeTodo, toggleTodoComplete } from '../store/todoSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/';
 
 function TodoApp() {
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todos.tasks);
 
-  const [inputText, setInputText] = useState('');
-  const [error, setError] = useState('');
+  const todos = useSelector((state: RootState) => state.todos.tasks);
+
+  console.log('Todos:', todos);
+  const [inputText, setInputText] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const handleAddTask = () => {
     if (inputText.trim() === '') {
@@ -24,11 +27,11 @@ function TodoApp() {
     setError('');
   };
 
-  const handleDeleteTask = (id) => {
+  const handleDeleteTask = (id: string) => {
     dispatch(removeTodo(id));
   };
 
-  const handleToggleTask = (id) => {
+  const handleToggleTask = (id: string) => {
     dispatch(toggleTodoComplete(id));
   };
 
@@ -44,8 +47,8 @@ function TodoApp() {
             id="input-box"
             placeholder="Add your text"
             value={inputText}
-            onChange={(event) => setInputText(event.target.value)}
-            onKeyDown={(event) => event.key === 'Enter' && handleAddTask()}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => setInputText(event.target.value)}
+            onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => event.key === 'Enter' && handleAddTask()}
           />
           <button id="add-task-btn" onClick={handleAddTask}>
             Add
